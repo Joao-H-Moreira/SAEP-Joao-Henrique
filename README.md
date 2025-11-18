@@ -12,7 +12,7 @@ cd <YOUR_PROJECT_NAME>
 
 npm i
 
-
+nmp install vite@v4
 npm run dev
 ```
 
@@ -24,3 +24,4 @@ Esse projeto foi feito com:
 - React
 - shadcn-ui
 - Tailwind CSS
+
