@@ -189,3 +189,270 @@ Esse projeto foi feito com:
 - notes
 - created_at
 
+.
+
+🔵RF001 – Cadastro automático de perfil de usuário
+CT001 – Criar perfil automaticamente ao criar usuário
+
+Pré-condições: Acesso ao sistema com permissão para criar usuários.
+Objetivo: Validar se o perfil é criado automaticamente.
+Passos:
+
+Criar um novo usuário via auth.users.
+
+Acessar a tabela profiles.
+
+Pesquisar registro com id igual ao id do novo usuário.
+Resultado Esperado:
+
+Um registro deve ser criado em profiles com o mesmo id do usuário, preenchendo full_name como nulo (ou padrão) e created_at automático.
+
+🔵 RF002 – Visualização do próprio perfil
+CT002 – Usuário acessa seu próprio perfil
+
+Pré-condições: Usuário autenticado.
+Passos:
+
+Realizar login.
+
+Acessar endpoint/tela “Meu perfil”.
+Resultado Esperado:
+
+O usuário visualiza somente seu próprio perfil.
+
+CT003 – Usuário tenta acessar perfil de outro usuário
+
+Pré-condições: Dois usuários cadastrados.
+Passos:
+
+Logar como Usuário A.
+
+Tentar acessar perfil do Usuário B via API/URL.
+Resultado Esperado:
+
+Sistema bloqueia o acesso (403 Forbidden ou equivalente).
+
+🔵 RF003 – Atualização do próprio perfil
+CT004 – Atualizar perfil com sucesso
+
+Pré-condições: Usuário autenticado.
+Passos:
+
+Logar.
+
+Abrir tela “Meu perfil”.
+
+Alterar campos permitidos (ex.: full_name).
+
+Salvar.
+Resultado Esperado:
+
+Sistema atualiza apenas o perfil logado.
+
+CT005 – Impedir atualização de perfil de outro usuário
+
+Passos:
+
+Logar como Usuário A.
+
+Enviar requisição para atualizar perfil de Usuário B.
+Resultado Esperado:
+
+Atualização bloqueada.
+
+🔵 RF004 – Cadastro de categorias
+CT006 – Criar categoria
+
+Pré-condições: Usuário autenticado.
+Passos:
+
+Enviar dados válidos (name, description).
+
+Submeter criação.
+Resultado Esperado:
+
+Categoria cadastrada na tabela categories.
+
+🔵 RF005 – Visualização de categorias
+CT007 – Listar todas as categorias
+
+Passos:
+
+Usuário autenticado acessa lista de categorias.
+Resultado Esperado:
+
+Todas as categorias existentes são exibidas.
+
+🔵 RF006 – Atualização de categorias
+CT008 – Atualizar categoria existente
+
+Passos:
+
+Selecionar categoria cadastrada.
+
+Alterar campos.
+
+Salvar.
+Resultado Esperado:
+
+Categoria atualizada com sucesso.
+
+🔵 RF007 – Exclusão de categorias
+CT009 – Excluir categoria existente
+
+Passos:
+
+Selecionar categoria.
+
+Executar exclusão.
+Resultado Esperado:
+
+Categoria removida da tabela categories.
+
+🔵 RF008 – Cadastro de produtos
+CT010 – Cadastrar produto vinculado a categoria
+
+Pré-condições: Categoria criada.
+Passos:
+
+Enviar campos válidos (name, category_id, unit etc.)
+
+Submeter.
+Resultado Esperado:
+
+Produto cadastrado com category_id válido.
+
+current_quantity inicial conforme regra (ex.: 0).
+
+🔵 RF009 – Visualização de produtos
+CT011 – Listar todos os produtos
+
+Passos:
+
+Usuário autenticado acessa lista de produtos.
+Resultado Esperado:
+
+Todos os produtos cadastrados são exibidos.
+
+🔵 RF010 – Atualização de produtos
+CT012 – Atualizar informações do produto
+
+Passos:
+
+Selecionar produto.
+
+Alterar descrição, unit ou minimum_quantity.
+
+Salvar.
+Resultado Esperado:
+
+Produto atualizado com sucesso.
+
+Campo updated_at deve alterar (relacionado ao RF016).
+
+🔵 RF011 – Exclusão de produtos
+CT013 – Excluir produto
+
+Passos:
+
+Selecionar produto.
+
+Executar exclusão.
+Resultado Esperado:
+
+Produto removido da tabela products.
+
+🔵 RF012 – Registro de movimentações de estoque
+CT014 – Registrar entrada de estoque
+
+Passos:
+
+Selecionar produto.
+
+Criar movimentação do tipo "entrada" com quantidade X.
+Resultado Esperado:
+
+Registro criado em stock_movements.
+
+Quantidade somada ao current_quantity (RF014).
+
+CT015 – Registrar saída de estoque
+
+Passos:
+
+Selecionar produto.
+
+Criar movimentação tipo "saída".
+Resultado Esperado:
+
+Registro criado.
+
+Quantidade subtraída do current_quantity sem permitir valor negativo.
+
+CT016 – Impedir saída maior que quantidade atual
+
+Passos:
+
+Tentar criar saída com quantity > current_quantity.
+Resultado Esperado:
+
+Sistema nega operação.
+
+🔵 RF013 – Associação de movimentações ao responsável
+CT017 – Registrar movimentação com responsável automático
+
+Passos:
+
+Logar.
+
+Criar movimentação de estoque.
+Resultado Esperado:
+
+Campo responsible_user_id é preenchido automaticamente com o id do usuário logado.
+
+🔵 RF014 – Atualização automática da quantidade
+CT018 – Atualização correta para entrada
+
+Passos:
+
+Verificar quantidade atual.
+
+Criar movimentação de entrada.
+Resultado Esperado:
+
+current_quantity = quantidade anterior + quantidade da entrada.
+
+CT019 – Atualização correta para saída
+
+Passos:
+
+Verificar quantidade atual.
+
+Criar movimentação de saída.
+Resultado Esperado:
+
+current_quantity = quantidade anterior – quantidade da saída.
+
+🔵 RF015 – Consulta de movimentações
+CT020 – Listar todas as movimentações
+
+Passos:
+
+Usuário autenticado acessa lista de movimentações.
+Resultado Esperado:
+
+Todas as movimentações são exibidas, incluindo produto, tipo, quantidade e responsável.
+
+🔵 RF016 – Atualização automática do updated_at
+CT021 – Alterar produto e validar updated_at
+
+Passos:
+
+Capturar valor atual de updated_at.
+
+Atualizar qualquer campo editável do produto.
+
+Consultar produto novamente.
+Resultado Esperado:
+
+updated_at deve ser alterado automaticamente para timestamp atual.
