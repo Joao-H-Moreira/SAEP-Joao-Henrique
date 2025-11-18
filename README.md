@@ -149,7 +149,8 @@ Esse projeto foi feito com:
 - Cada movimentação se refere a **um produto** (N:1)
 1. **DER em formato de diagrama (ASCII)**
 
-![image.png](attachment:1763e451-176a-448d-b019-c0f6cef96f7a:image.png)
+<img width="697" height="649" alt="image" src="https://github.com/user-attachments/assets/ec541807-16ea-4189-bcc2-3ed040ef3ff3" />
+
 
 1. **DER em formato de lista (para ferramenta CASE)**
 
@@ -187,3 +188,4 @@ Esse projeto foi feito com:
 - responsible_user_id (FK → auth.users.id)
 - notes
 - created_at
+
